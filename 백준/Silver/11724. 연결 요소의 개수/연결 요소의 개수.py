@@ -5,15 +5,10 @@ input = sys.stdin.readline
 
 N, M = map(int, input().split())
 
-graph = dict()
+graph = {i: [] for i in range(1, N + 1)}
 
 for _ in range(M):
     u, v = map(int, input().split())
-
-    if u not in graph:
-        graph[u] = []
-    if v not in graph:
-        graph[v] = []
 
     graph[u].append(v)
     graph[v].append(u)
