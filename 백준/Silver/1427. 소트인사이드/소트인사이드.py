@@ -1,2 +1,2 @@
 import sys
-print(*sorted(sys.stdin.readline().rstrip(),reverse=True),sep='')
+print(*sorted(sys.stdin.readline(),reverse=True),sep='')
