@@ -1,5 +1,4 @@
-import sys
-s = int(sys.stdin.readline())
+s = int(input())
 d = list(range(1002))
 for i in range(2, s + 1):
     j = 2
