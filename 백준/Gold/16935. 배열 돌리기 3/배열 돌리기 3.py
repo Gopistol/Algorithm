@@ -9,41 +9,19 @@ r = list(map(int, input().split()))
 
 
 def one(arr):  # 상하 반전
-    new_arr = []
-    for i in range(len(arr) - 1, -1, -1):
-        new_arr.append(arr[i])
-
-    return new_arr
+    return list(reversed(arr))
 
 
 def two(arr):  # 좌우 반전
-    new_arr = [[] for _ in range(len(arr))]
-    for i in range(len(arr)):
-        for j in range(len(arr[0]), 0, -1):
-            new_arr[i].append(arr[i][j - 1])
-
-    return new_arr
+    return [list(reversed(row)) for row in arr]
 
 
 def three(arr):  # 오른쪽 90도 회전
-    new_arr = [[] for _ in range(len(arr[0]))]
-    for i in range(len(arr[0])):
-        for j in range(len(arr) - 1, -1, -1):
-            new_arr[i].append(arr[j][i])
-
-    return new_arr
+    return [list(col) for col in zip(*arr[::-1])]
 
 
 def four(arr):  # 왼쪽 90도 회전
-    new_arr = [[] for _ in range(len(arr[0]))]
-    idx = 0
-
-    for i in range(len(arr[0]) - 1, -1, -1):
-        for j in range(len(arr)):
-            new_arr[idx].append(arr[j][i])
-        idx += 1
-
-    return new_arr
+    return [list(row) for row in reversed(list(zip(*arr)))]
 
 
 def five(arr):  # 사분면 시계방향 회전
