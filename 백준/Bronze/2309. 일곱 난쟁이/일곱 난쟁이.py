@@ -1,6 +1,7 @@
 import sys
 
 dwarfs = [int(sys.stdin.readline()) for _ in range(9)]
+ex = sum(dwarfs) - 100
 
 
 def find():
@@ -9,9 +10,7 @@ def find():
         for j in range(9):
             if i == j:
                 continue
-
-            ex = dwarfs[i] + dwarfs[j]
-            if sum(dwarfs) - ex == 100:
+            if ex == dwarfs[i] + dwarfs[j]:
                 return dwarfs[i], dwarfs[j]
 
 
