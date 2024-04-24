@@ -1,21 +1,17 @@
 import sys
-
 dwarfs = [int(sys.stdin.readline()) for _ in range(9)]
 ex = sum(dwarfs) - 100
-
-
-def find():
-    global dwarfs
-    for i in range(9):
-        for j in range(9):
-            if i == j:
-                continue
-            if ex == dwarfs[i] + dwarfs[j]:
-                return dwarfs[i], dwarfs[j]
-
-
-ex_1, ex_2 = find()
-dwarfs.remove(ex_1)
-dwarfs.remove(ex_2)
+cont = False
+for i in range(8):
+    for j in range(i + 1, 9):
+        t1 = dwarfs[i]
+        t2 = dwarfs[j]
+        if t1 + t2 == ex:
+            dwarfs.remove(t1)
+            dwarfs.remove(t2)
+            cont = True
+            break
+    if cont:
+        break
 for dwarf in sorted(dwarfs):
     print(dwarf)
