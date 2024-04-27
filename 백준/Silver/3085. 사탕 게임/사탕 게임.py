@@ -1,53 +1,57 @@
 import sys
 
 input = sys.stdin.readline
+
 n = int(input())
-c = [list(input()) for _ in range(n)]
-
-# 상근이는 사탕의 색이 다른 인접한 두 칸을 고른다.
-# 그 다음 고른 칸에 들어있는 사탕을 서로 교환한다.
-# 이제, 모두 같은 색으로 이루어져 있는 가장 긴 연속 부분(행 또는 열)을 고른 다음
-# 그 사탕을 모두 먹는다.
+board = [list(input()) for _ in range(n)]
 
 
-def checkCurMaxNum():
-    max_cnt = 1  # total_max_cnt
+def find_candy():
+    global board
+    max_count = 1
+    # 가로 확인
     for i in range(n):
-        # 가로 먼저 확인
-        cnt = 1
+        c_count = 1
         for j in range(1, n):
-            if c[i][j] == c[i][j - 1]:
-                cnt += 1
+            if board[i][j] == board[i][j - 1]:
+                c_count += 1
             else:
-                cnt = 1
-            max_cnt = max(cnt, max_cnt)
-        # 세로 확인
-        cnt = 1
+                c_count = 1
+            max_count = max(max_count, c_count)
+
+    # 세로
+    for i in range(n):
+        l_count = 1
         for j in range(1, n):
-            if c[j][i] == c[j - 1][i]:
-                cnt += 1
+            if board[j][i] == board[j - 1][i]:
+                l_count += 1
             else:
-                cnt = 1
-            max_cnt = max(cnt, max_cnt)
+                l_count = 1
+            max_count = max(max_count, l_count)
 
-    return max_cnt
+    return max_count
 
 
-# 오른쪽 swap, 아래쪽 swap
-result = 1
+def switch(prev, next):
+    global board
+    py, px = prev
+    ny, nx = next
+
+    board[py][px], board[ny][nx] = board[ny][nx], board[py][px]
+
+
+answer = 1
+
 for i in range(n):
     for j in range(n - 1):
-        # 오른쪽 swap
-        if j + 1 < n and c[i][j] != c[i][j + 1]:
-            c[i][j], c[i][j + 1] = c[i][j + 1], c[i][j]  # swap
-            # 모두 같은 색으로 이루어져 있는 가장 긴 연속 부분을 고름
-            result = max(result, checkCurMaxNum())
-            c[i][j], c[i][j + 1] = c[i][j + 1], c[i][j]  # 다시 되돌리기
-        # 왼쪽 swap
-        if i + 1 < n and c[i][j] != c[i + 1][j]:
-            c[i][j], c[i + 1][j] = c[i + 1][j], c[i][j]  # swap
-            # 모두 같은 색으로 이루어져 있는 가장 긴 연속 부분을 고름
-            result = max(result, checkCurMaxNum())
-            c[i][j], c[i + 1][j] = c[i + 1][j], c[i][j]  # 다시 되돌리기
+        if j + 1 < n and board[i][j] != board[i][j + 1]:
+            switch((i, j), (i, j + 1))
+            answer = max(answer, find_candy())
+            switch((i, j + 1), (i, j))
 
-print(result)
+        if i + 1 < n and board[i][j] != board[i + 1][j]:
+            switch((i, j), (i + 1, j))
+            answer = max(answer, find_candy())
+            switch((i + 1, j), (i, j))
+
+print(answer)
